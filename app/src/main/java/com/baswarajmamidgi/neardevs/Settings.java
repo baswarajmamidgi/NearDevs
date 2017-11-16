@@ -12,6 +12,10 @@ import android.view.ViewGroup;
  * A simple {@link Fragment} subclass.
  */
 public class Settings extends Fragment {
+    public static Settings newInstance() {
+        Settings fragment = new Settings();
+        return fragment;
+    }
 
 
     public Settings() {
