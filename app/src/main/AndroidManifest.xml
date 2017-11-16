@@ -27,7 +27,6 @@
 
                 <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="@string/fb_login_protocol_scheme" />
@@ -41,7 +40,7 @@
         <activity android:name=".MapsActivity" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main">
+            android:label="Near Devs">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
