@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Near Devs</string>
+    <string name="facebook_app_id">1976249665967435</string>
+
+    <string name="fb_login_protocol_scheme">fb1976249665967435</string>
+
+</resources>

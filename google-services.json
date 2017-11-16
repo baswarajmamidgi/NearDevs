@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "894255079958",
+    "firebase_url": "https://vnr-vjietedu.firebaseio.com",
+    "project_id": "vnr-vjietedu",
+    "storage_bucket": "vnr-vjietedu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894255079958:android:283e44c841199141",
+        "android_client_info": {
+          "package_name": "com.vnrvjietedu.vnrvjiet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "894255079958-32uufnc6dptdnsm9ktcp5ofutsrldf5h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vnrvjietedu.vnrvjiet",
+            "certificate_hash": "a215517c94550526c516d59747fc28d6b44f3b72"
+          }
+        },
+        {
+          "client_id": "894255079958-6n9th4gut4vugcjmtd7fpl09do4ersqj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0vCkfnO_-kapV17ETcvrqo4PMyVEJwVE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "894255079958-6n9th4gut4vugcjmtd7fpl09do4ersqj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
