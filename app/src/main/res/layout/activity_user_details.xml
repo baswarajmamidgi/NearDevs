@@ -31,7 +31,7 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/student"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -39,7 +39,7 @@
                 android:text="Student" />
 
             <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/employee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -70,42 +70,72 @@
             android:layout_height="match_parent"
             android:columnCount="3">
 
-            <RadioButton
-                android:id="@+id/radioButton3"
+            <CheckBox
+                android:id="@+id/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
+                android:onClick="onCheckboxClicked"
                 android:text="Android" />
 
-            <RadioButton
-                android:id="@+id/radioButton4"
+            <CheckBox
+                android:id="@+id/ios"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="onCheckboxClicked"
                 android:text="IOS" />
 
-            <RadioButton
-                android:id="@+id/radioButton5"
+            <CheckBox
+                android:id="@+id/web"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="onCheckboxClicked"
                 android:text="Web Development" />
 
-            <RadioButton
-                android:id="@+id/radioButton6"
+
+            <CheckBox
+                android:id="@+id/machinelearning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="onCheckboxClicked"
                 android:text="Machine Learning" />
 
-            <RadioButton
-                android:id="@+id/radioButton7"
+
+            <CheckBox
+                android:id="@+id/iot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="onCheckboxClicked"
                 android:text="IOT" />
 
-            <RadioButton
-                android:id="@+id/radioButton8"
+
+            <CheckBox
+                android:id="@+id/bigdata"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="onCheckboxClicked"
                 android:text="Big Data" />
+
+            <CheckBox
+                android:id="@+id/python"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/textInputLayout"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="Python" />
+
+            <CheckBox
+                android:id="@+id/java"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Java" />
+
+            <CheckBox
+                android:id="@+id/javascript"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Java Script" />
+
         </GridLayout>
     </RadioGroup>
 

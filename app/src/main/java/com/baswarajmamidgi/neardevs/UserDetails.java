@@ -2,14 +2,17 @@ package com.baswarajmamidgi.neardevs;
 
 import android.content.Intent;
 import android.content.SearchRecentSuggestionsProvider;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -21,10 +24,15 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 public class UserDetails extends AppCompatActivity implements View.OnClickListener{
 
@@ -35,6 +43,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     private ImageButton get_address;
     private Button submit;
     int PLACE_PICKER_REQUEST = 1;
+    ArrayList<String> domains=new ArrayList<>();
 
     FirebaseDatabase database;
 
@@ -76,35 +85,117 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.android:
+                if (checked)
+                    domains.add("android");
+            else
+                    domains.remove("android");
+                break;
+            case R.id.ios:
+                if (checked)
+                    domains.add("IOS");
+                else
+                    domains.remove("IOS");
+                break;
+            case R.id.web:
+                if (checked)
+                    domains.add("Web Development");
+                else
+                    domains.remove("Web Development");
+                break;
+            case R.id.machinelearning:
+                if (checked)
+                    domains.add("Machine Learning");
+                else
+                    domains.remove("Machine Learning");
+                break;
+            case R.id.iot:
+                if (checked)
+                    domains.add("IOT");
+                else
+                    domains.remove("IOT");
+                break;
+            case R.id.bigdata:
+                if (checked)
+                    domains.add("Big Data");
+                else
+                    domains.remove("Big Data");
+                break;
+
+            case R.id.python:
+                if (checked)
+                    domains.add("Python");
+                else
+                    domains.remove("Python");
+                break;
+            case R.id.java:
+                if (checked)
+                    domains.add("Java");
+                else
+                    domains.remove("Java");
+                break;
+            case R.id.javascript:
+                if (checked)
+                    domains.add("Java Script");
+                else
+                    domains.remove("Java Script");
+                break;
+        }
+    }
+
 
 
 
 
 
     void submitDetails(){
-    try {
-        RadioGroup occupation = findViewById(R.id.occupation);
-        int selectedid = occupation.getCheckedRadioButtonId();
-        RadioButton radioButton = findViewById(selectedid);
-        String occ = (String) radioButton.getText();
 
-        RadioGroup domain = findViewById(R.id.domain);
-        selectedid = domain.getCheckedRadioButtonId();
-        radioButton = findViewById(selectedid);
-        String dom = (String) radioButton.getText();
-    }catch (Exception e){
-        Log.i("log",e.getLocalizedMessage());
-    }
+        String occupation = null;
+        RadioButton radioButton = findViewById(R.id.student);
+
+        if(radioButton.isChecked()){
+            occupation="Student";
+        }
+
+        RadioButton radioButton2 = findViewById(R.id.employee);
+
+        if(radioButton2.isChecked()){
+            occupation="Employee";
+        }
 
 
-        Editable email_data=email.getText();
 
-        Editable mobile_data=mobile.getText();
 
-        String address= (String) place.getAddress();
+
+        //Editable email_data=email.getText();
+
+        //Editable mobile_data=mobile.getText();
+
+        LatLng address=  place.getLatLng();
+        String location=address.latitude+","+address.longitude;
+        if(TextUtils.isEmpty(location)){
+            Toast.makeText(this, "Select address", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        User user=new User("user1","test@gmail.com","9989478011",occupation,domains.toString(),location);
 
         DatabaseReference reference=database.getReference("user1");
-        reference.setValue(address);
+        reference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(UserDetails.this, "Profile Updated Seccessfully", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
 
 
