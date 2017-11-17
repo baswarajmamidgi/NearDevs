@@ -31,17 +31,14 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.navigation_maps:
                         selectedfragment = Maps.newInstance();
-                        mTextMessage.setText(R.string.title_home);
                         break;
                     case R.id.navigation_profile:
                         selectedfragment = Profile.newInstance();
 
-                        mTextMessage.setText(R.string.title_dashboard);
                         break;
                     case R.id.navigation_settings:
                         selectedfragment = Settings.newInstance();
 
-                        mTextMessage.setText(R.string.title_notifications);
                         break;
                 }
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

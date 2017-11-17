@@ -2,6 +2,7 @@ package com.baswarajmamidgi.neardevs;
 
 import android.content.Intent;
 import android.content.SearchRecentSuggestionsProvider;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -20,6 +21,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
@@ -30,19 +34,22 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 public class UserDetails extends AppCompatActivity implements View.OnClickListener{
 
-    private TextInputEditText email;
     private TextInputEditText mobile;
     private TextView address;
     private Place place;
     private ImageButton get_address;
     private Button submit;
     int PLACE_PICKER_REQUEST = 1;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
     ArrayList<String> domains=new ArrayList<>();
 
     FirebaseDatabase database;
@@ -53,13 +60,16 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
         address=findViewById(R.id.address);
-        email=findViewById(R.id.email);
         mobile=findViewById(R.id.mobile_data);
         get_address=findViewById(R.id.my_location);
         get_address.setOnClickListener(this);
         submit=findViewById(R.id.submit_data);
         submit.setOnClickListener(this);
+
+        preferences=getSharedPreferences("profile",0);
+        editor=preferences.edit();
         database=FirebaseDatabase.getInstance();
+        getuserdata();
 
 
 
@@ -173,7 +183,6 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
 
 
-        //Editable email_data=email.getText();
 
         //Editable mobile_data=mobile.getText();
 
@@ -184,9 +193,9 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             return;
         }
 
-        User user=new User("user1","test@gmail.com","9989478011",occupation,domains.toString(),location);
+        User user=new User(preferences.getString("name",null),preferences.getString("email",null),"9989478011",occupation,domains.toString(),location);
 
-        DatabaseReference reference=database.getReference("user1");
+        DatabaseReference reference=database.getReference("users").child(preferences.getString("id",null));
         reference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -196,6 +205,14 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
             }
         });
+
+        editor.putString("occupation",occupation);
+        editor.putString("domain",domains.toString());
+        editor.putString("address",place.getAddress().toString());
+
+        editor.commit();
+        finish();
+
 
 
 
@@ -211,6 +228,46 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    public void getuserdata() {
+
+
+
+        GraphRequest request = GraphRequest.newMeRequest(
+                AccessToken.getCurrentAccessToken(),
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        // Application code
+                        Log.v("log", response.toString());
+
+                        try {
+                            //and fill them here like so.
+                            String id = object.getString("id");
+                            String email = object.getString("email");
+                            String name = object.getString("name");
+                            String imageurl="https://graph.facebook.com/" + id+ "/picture?type=large";
+                            editor.putString("id",id);
+
+                            editor.putString("email",email);
+                            editor.putString("name",name);
+                            editor.putString("imageurl",imageurl);
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,email,gender");
+        request.setParameters(parameters);
+        request.executeAsync();
     }
 
 

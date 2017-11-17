@@ -147,7 +147,6 @@
         android:layout_alignStart="@+id/textInputLayout"
         android:layout_below="@+id/domain"
         android:layout_marginTop="11dp"
-        android:text="Email"
         android:textColor="@color/black" />
 
     <android.support.design.widget.TextInputLayout
@@ -159,12 +158,6 @@
         android:layout_marginTop="11dp"
         android:id="@+id/textInputLayout">
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="41dp"
-            android:hint="Email"
-            android:inputType="textWebEmailAddress" />
     </android.support.design.widget.TextInputLayout>
 
     <TextView

@@ -58,6 +58,8 @@ public class Maps extends Fragment {
     private GoogleMap mMap;
     private MapView mapView;
     private FusedLocationProviderClient mFusedLocationClient;
+    final ArrayList<User> users = new ArrayList<>();
+
 
 
     @Override
@@ -139,26 +141,15 @@ public class Maps extends Fragment {
             Log.i("log", e.getLocalizedMessage());
         }
 
-
-        return view;
-    }
-
-    void loadUserData() {
-
-
-        final ArrayList<User> users = new ArrayList<>();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("users");
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-                    Map<String, String> map = (Map) dataSnapshot.getValue();
-                    User newuser = new User(map.get("Name"), map.get("address"));
-                    users.add(newuser);
-                    String[] coords=newuser.getAddress().split(",");
-                    LatLng latLng=new LatLng(Double.parseDouble(coords[0]),Double.parseDouble(coords[1]));
-                    mMap.addMarker(new MarkerOptions().position(latLng).title("Person 4").snippet("Karthi\n 8328363868"));
+                Map<String, String> map = (Map) dataSnapshot.getValue();
+                User newuser = new User(map.get("Name"), map.get("address"));
+                users.add(newuser);
 
 
 
@@ -185,15 +176,24 @@ public class Maps extends Fragment {
             }
         });
 
-        for (User user : users) ;
-        {
-            if (mMap != null) {
 
-               // mMap.addMarker(new MarkerOptions().position(users.get(1)).title("Person 4").snippet("Karthi\n 8328363868"));
+        return view;
+    }
+
+
+
+
+    void loadUserData() {
+
+        for (User user : users){
+
+                String[] coords=user.getAddress().split(",");
+                LatLng latLng=new LatLng(Double.parseDouble(coords[0]),Double.parseDouble(coords[1]));
+                mMap.addMarker(new MarkerOptions().position(latLng).title("Person 4").snippet("Karthi\n 8328363868"));
 
 
             }
 
         }
     }
-}
+
