@@ -65,11 +65,12 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         get_address.setOnClickListener(this);
         submit=findViewById(R.id.submit_data);
         submit.setOnClickListener(this);
+        getuserdata();
+
 
         preferences=getSharedPreferences("profile",0);
         editor=preferences.edit();
         database=FirebaseDatabase.getInstance();
-        getuserdata();
 
 
 
@@ -192,25 +193,32 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             Toast.makeText(this, "Select address", Toast.LENGTH_SHORT).show();
             return;
         }
+        while (preferences.getString("id",null)!=null) {
 
-        User user=new User(preferences.getString("name",null),preferences.getString("email",null),"9989478011",occupation,domains.toString(),location);
+            User user = new User(preferences.getString("name", null), preferences.getString("email", null), "9989478011", occupation, domains.toString(), location);
 
-        DatabaseReference reference=database.getReference("users").child(preferences.getString("id",null));
-        reference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(UserDetails.this, "Profile Updated Seccessfully", Toast.LENGTH_SHORT).show();
+            DatabaseReference reference = database.getReference("users").child(preferences.getString("id", null));
+            reference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(UserDetails.this, "Profile Updated Seccessfully", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
+            });
 
-            }
-        });
+            break;
+
+        }
 
         editor.putString("occupation",occupation);
         editor.putString("domain",domains.toString());
         editor.putString("address",place.getAddress().toString());
 
         editor.commit();
+
+        startActivity(new Intent(UserDetails.this,MainActivity.class));
         finish();
 
 

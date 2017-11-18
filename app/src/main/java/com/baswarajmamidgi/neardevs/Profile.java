@@ -45,7 +45,7 @@ public class Profile extends Fragment {
         TextView address=view.findViewById(R.id.user_address);
         ImageButton profile_image=view.findViewById(R.id.profile_photo);
 
-        name.setText("Name: "+preferences.getString("name",null));
+        name.setText(preferences.getString("name",null));
         email.setText("Email: "+preferences.getString("email",null));
         occupation.setText("Occupation: "+preferences.getString("occupation",null));
         domain.setText("Domain: "+preferences.getString("domain",null));

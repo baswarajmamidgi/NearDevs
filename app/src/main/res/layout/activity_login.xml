@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context="com.baswarajmamidgi.neardevs.LoginActivity">
 
+
+
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
@@ -13,6 +15,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="96dp" />
+        android:layout_marginTop="216dp" />
 
 </RelativeLayout>

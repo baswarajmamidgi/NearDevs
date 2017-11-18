@@ -5,6 +5,7 @@ package com.baswarajmamidgi.neardevs;
  */
 
 public class User {
+    String id;
     String Name;
     String email;
     String mobile;
@@ -22,7 +23,8 @@ public class User {
         this.address=address;
     }
 
-    public User(String name, String address) {
+    public User(String id,String name, String address) {
+        this.id=id;
         this.Name=name;
         this.address=address;
     }
@@ -31,6 +33,10 @@ public class User {
     public String getEmail() {
         return email;
     }
+
+    public String getUserName() {return Name;}
+
+    public String getId(){return id; }
 
     public void setEmail(String email) {
         this.email = email;
