@@ -40,6 +40,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
@@ -208,6 +210,7 @@ public class Maps extends Fragment implements GoogleApiClient.ConnectionCallback
                     public void onInfoWindowClick(Marker arg0) {
                         Bundle args = new Bundle();
                         args.putString("id", (String) arg0.getTag());
+                        Log.i("log", (String) arg0.getTag());
 
                         BottomSheetDialogFragment bottomSheetDialogFragment = new DeveloperProfile();
 
@@ -288,7 +291,7 @@ public class Maps extends Fragment implements GoogleApiClient.ConnectionCallback
 
                 if(location.distanceTo(location1)<radius) {
 
-                    Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(user.getUserName()).snippet("more info>>"));
+                    Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(user.getUserName()).snippet("more info>>").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)).flat(true));
                     //Log.i("log",user.getId());
                     marker.setTag(user.getId());
                 }

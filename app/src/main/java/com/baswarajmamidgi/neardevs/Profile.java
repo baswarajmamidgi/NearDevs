@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class Profile extends Fragment {
         occupation.setText("Occupation: "+preferences.getString("occupation",null));
         domain.setText("Domain: "+preferences.getString("domain",null));
         address.setText("Address: "+preferences.getString("address",null));
+        Log.i("log",preferences.getString("imageurl",null));
 
         Glide.with(getContext())
                 .load(preferences.getString("imageurl",null))

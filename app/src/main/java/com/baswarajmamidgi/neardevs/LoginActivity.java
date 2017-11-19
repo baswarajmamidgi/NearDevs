@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 setResult(RESULT_OK);
-                Intent i=new Intent(LoginActivity.this,MainActivity.class);
+                Intent i=new Intent(LoginActivity.this,UserDetails.class);
                 startActivity(i);
                 finish();
             }

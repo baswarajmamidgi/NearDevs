@@ -51,7 +51,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     ArrayList<String> domains=new ArrayList<>();
-
+    private String email;
     FirebaseDatabase database;
 
 
@@ -185,17 +185,19 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
 
 
-        //Editable mobile_data=mobile.getText();
-
-        LatLng address=  place.getLatLng();
-        String location=address.latitude+","+address.longitude;
-        if(TextUtils.isEmpty(location)){
-            Toast.makeText(this, "Select address", Toast.LENGTH_SHORT).show();
+        Editable mobile_data=mobile.getText();
+        if(place==null){
+            Toast.makeText(this, "select address", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        LatLng address=  place.getLatLng();
+
+        String location=address.latitude+","+address.longitude;
+
         while (preferences.getString("id",null)!=null) {
 
-            User user = new User(preferences.getString("name", null), preferences.getString("email", null), "9989478011", occupation, domains.toString(), location);
+            User user = new User(preferences.getString("name", null), preferences.getString("email", null), mobile_data.toString(), occupation, domains.toString(), location);
 
             DatabaseReference reference = database.getReference("users").child(preferences.getString("id", null));
             reference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -203,6 +205,11 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
                         Toast.makeText(UserDetails.this, "Profile Updated Seccessfully", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(UserDetails.this, "Error Occured. Please try again", Toast.LENGTH_SHORT).show();
+                        return;
                     }
 
                 }
@@ -231,9 +238,9 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 place = PlacePicker.getPlace(data, this);
-                String toastMsg = String.format("Place: %s", place.getName());
-                address.setText(toastMsg);
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+                //String toastMsg = String.format("Place: %s", place.getName());
+                address.setText(place.getName());
+                //Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -255,12 +262,18 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
                         try {
                             //and fill them here like so.
                             String id = object.getString("id");
-                            String email = object.getString("email");
+                            Log.i("log",id);
+                            try {
+                                 email = object.getString("email");
+                                editor.putString("email",email);
+
+                            }catch (Exception e){
+                                Log.i("log",e.getLocalizedMessage());
+                            }
                             String name = object.getString("name");
                             String imageurl="https://graph.facebook.com/" + id+ "/picture?type=large";
                             editor.putString("id",id);
 
-                            editor.putString("email",email);
                             editor.putString("name",name);
                             editor.putString("imageurl",imageurl);
 

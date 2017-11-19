@@ -8,6 +8,6 @@
 
         <bitmap
             android:gravity="center"
-            android:src="@drawable/splashscreen_icon"/>
+            android:src="@drawable/logo"/>
     </item>
 </layer-list>

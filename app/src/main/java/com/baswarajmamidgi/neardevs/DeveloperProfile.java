@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Map;
 
@@ -71,17 +72,21 @@ public class DeveloperProfile extends BottomSheetDialogFragment {
         final TextView address=dialog.findViewById(R.id.developer_address);
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference("users");
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        DatabaseReference databaseReference = firebaseDatabase.getReference("users").child(args.getString("id"));
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
                 Map<String, String> map = (Map) dataSnapshot.getValue();
 
 
-                name.setText(map.get("Name"));
-                email.setText("Email :"+map.get("email"));
-                mobile.setText("Mobile :"+map.get("mobile"));
+                name.setText(map.get("userName"));
+                try {
+                    email.setText("Email :" + map.get("email"));
+                    mobile.setText("Mobile :" + map.get("mobile"));
+                }catch (Exception e){
+                    Log.i("DeveloperProfile",e.getLocalizedMessage());
+                }
                 domain.setText("Domain :"+map.get("domain"));
                 occupation.setText("Occupation :"+map.get("occupation"));
                 //address.setText("Address :"+map.get("address"));
@@ -93,24 +98,6 @@ public class DeveloperProfile extends BottomSheetDialogFragment {
                         .load(imageurl)
                         .into(profile_photo);
 
-
-
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
             }
 
             @Override
@@ -118,7 +105,6 @@ public class DeveloperProfile extends BottomSheetDialogFragment {
 
             }
         });
-
 
 
     }

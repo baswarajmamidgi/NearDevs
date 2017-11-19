@@ -194,7 +194,7 @@
             android:id="@+id/mobile_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="hint"
+            android:hint="Enter your mobile number"
             android:inputType="phone" />
     </android.support.design.widget.TextInputLayout>
 
@@ -229,11 +229,12 @@
 
     <Button
         android:id="@+id/submit_data"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/address"
-        android:layout_toEndOf="@+id/my_location"
-        android:layout_toRightOf="@+id/my_location"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:backgroundTint="@color/com_facebook_button_background_color"
         android:text="Submit" />
 
     <TextView
